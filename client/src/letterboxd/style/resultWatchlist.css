@@ -1,0 +1,23 @@
+@media only screen and (max-width: 992px) {
+  .imagem {
+    width: 100%;
+  }
+  .imagem-logo{
+    width: 30% !important;
+    height: 2% !important;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .imagem {
+    width: 50% !important;
+  }
+  .imagem-logo{
+    width: 13% !important;
+    height: 2% !important;
+  }
+}
+
+html{
+  height: 100%;
+}
