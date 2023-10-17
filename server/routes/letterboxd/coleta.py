@@ -9,29 +9,25 @@ options = Options()
 
 options = webdriver.FirefoxOptions()
 options.add_argument("-headless")
-
-
-
-# Lista de usuarios a serem analisados
-
+class CustomPythonError(Exception):
+  pass
 
 #
 # PROGRAMA QUE MSOTRA A INTERSECAO DA WATCHILIST DE USUARIOS NO LETTERBOXD
 #
 
 def get_watchlist_together2(usuarios):
+  try:
 
-  driver = webdriver.Firefox(options=options)
+    driver = webdriver.Firefox(options=options)
 
-  filmes = []
+    filmes = []
 
-  numero_filmes_watchlist_total = 0
+    for usuario in usuarios:
+      idx_pagina = 1
+      continuar = True
 
-  for usuario in usuarios:
-    idx_pagina = 1
-    continuar = True
-
-    try:
+      
       while continuar:
         driver.get(
           "https://letterboxd.com/"
@@ -40,10 +36,6 @@ def get_watchlist_together2(usuarios):
           + str(idx_pagina)
         )
         time.sleep(1)
-
-        numero_filmes_watchlist = driver.find_element(By.CLASS_NAME,"js-watchlist-count").text
-        numero_filmes_watchlist = int(numero_filmes_watchlist.replace(" FILMS", ""))
-        
 
         filmes_watchlist = driver.find_elements(By.CLASS_NAME, "poster-container")
 
@@ -56,13 +48,13 @@ def get_watchlist_together2(usuarios):
           # print(usuario + " acabou!")
 
         idx_pagina = idx_pagina + 1
-    except NoSuchElementException:
-      print(usuario + " acabou!")
+    driver.close()
+    print(filmes)
+  except NoSuchElementException as e:
+    raise CustomPythonError("Erro: Elemento nao encontrado")
+  except Exception:
+    raise CustomPythonError("Erro desconhecido")
 
-    numero_filmes_watchlist_total = numero_filmes_watchlist_total + numero_filmes_watchlist
-  driver.close()
-  print(filmes)
-  print(numero_filmes_watchlist_total)
 
 
 def main():

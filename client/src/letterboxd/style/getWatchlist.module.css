@@ -1,5 +1,6 @@
 .watchlist{
   background-color: #1F262C !important;
+  min-height: 100vh;
 }
 
 .loader {

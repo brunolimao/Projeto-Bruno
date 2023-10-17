@@ -8,6 +8,9 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/esm/Container';
+import Modal from'react-bootstrap/Modal';
+import {faXmark} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import styles from '../style/getWatchlist.module.css'
 
@@ -20,6 +23,8 @@ function GetWatchlist (){
 
   const [mensagem, setMensagem] = useState("")
   const [numFilmes, setNumFilmes] = useState("")
+  const [popShow, setpopShow] = useState(false);
+	const [modalInfo, setModalInfo] = useState("");
 
 
 	const handleSubmit = async (e) => {
@@ -68,7 +73,8 @@ function GetWatchlist (){
     
 			navigate('/letterboxd/resultwatchlist',{state:{result:response4.data}});
 		} catch (error) {
-		  console.error(error);
+		  setpopShow(true)
+			setModalInfo(error.response.data.error)
 		} 
   }
 
@@ -79,6 +85,11 @@ function GetWatchlist (){
     } else {
       document.getElementById("option").value = 'off'
     }
+  }
+
+  const handleOnClickModal = async(e) => {
+    e.preventDefault();
+    window.location.reload(true)
   }
 
   return (
@@ -106,15 +117,37 @@ function GetWatchlist (){
           </Card>
           
           <div id="loader" className=""></div>
-          
           <Row className={'justify-content-center my-2 ' + styles['text-color-white']}>{mensagem}</Row>
           <Row className={'justify-content-center ' + styles['text-color-white']}>{numFilmes}</Row>
-  
-          
+
           </Col>
         </Row>
         
       </Container>
+
+      <Modal
+        size="md"
+        show={popShow}
+        onHide={() => setpopShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm"
+        centered
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header>
+          <Row className=' w-100' style={{"justifyContent":"space-between"}}>
+            <Col className='my-auto'>
+              <Modal.Title id="example-modal-sizes-title-sm">
+                Erro
+              </Modal.Title>
+            </Col>
+            <Col className='my-auto text-end px-0'>
+              <FontAwesomeIcon icon={faXmark} size='2x' onClick={event => handleOnClickModal(event)}/>
+            </Col>
+          </Row>
+        </Modal.Header>
+        <Modal.Body className='text-center'>{modalInfo}</Modal.Body>
+      </Modal>
       
     </div>
   )

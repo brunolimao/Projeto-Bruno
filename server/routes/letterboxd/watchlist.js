@@ -15,8 +15,7 @@ router.post('/tempo' ,
       const result = output.replaceAll("\r","").split("\n")
       res.send({tempo:result[0]})
     } catch (error) {
-      console.error('Error executing Python script:', error);
-      res.status(500).send('An error occurred while executing the Python script.');
+      res.status(500).send({ error: error + ' Tente novamente mais tarde.'});
     }
   }
 );
@@ -32,8 +31,7 @@ router.post('/coleta' ,
       const result = output.replaceAll("\r","").split("\n")
       res.send(result[0])
     } catch (error) {
-      console.error('Error executing Python script:', error);
-      res.status(500).send('An error occurred while executing the Python script.');
+      res.status(500).send({ error: 'Não foi possível coletar os filmes,\ntente novamente mais tarde.'});
     }
 
   }
@@ -61,8 +59,7 @@ router.post('/filmesEmComum' ,
       const result = output.replaceAll("\r","").split("\n")
       res.send({message:result})
     } catch (error) {
-      console.error('Error executing Python script:', error);
-      res.status(500).send('An error occurred while executing the Python script.');
+      res.status(500).send({ error: error + '\n' + 'Tente novamente mais tarde.'});
     }
   }
 );
@@ -77,8 +74,7 @@ router.post('/final', async function (req, res, next) {
     const result = await convertData(output);
     res.send(result);
   } catch (error) {
-    console.error('Error executing Python script:', error);
-    res.status(500).send('An error occurred while executing the Python script.');
+    res.status(500).send({ error: 'Não foi possível coletar os filmes,\ntente novamente mais tarde.'});
   }
 });
 

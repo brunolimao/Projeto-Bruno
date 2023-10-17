@@ -37,19 +37,25 @@ async function convertData(data) {
 }
 
 async function executePythonScript(scriptPath, scriptArgs) {
-  const pythonProcess = spawn('python', [scriptPath, ...scriptArgs]);
-
   let scriptOutput = '';
-
-  pythonProcess.stdout.on('data', (data) => {
-    scriptOutput += data.toString();
-  });
-
-  pythonProcess.stderr.on('data', (data) => {
-    console.error(data.toString());
-  });
-
+  let scriptError = '';
   await new Promise((resolve, reject) => {
+    const pythonProcess = spawn('python', [scriptPath, ...scriptArgs]);
+
+    pythonProcess.stdout.on('data', (data) => {
+      scriptOutput += data.toString();
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      const errorMessage = data.toString();
+      if (errorMessage.includes('Algum usuario com 0 filmes na watchlist.')) {
+        reject("Algum usuario com 0 filmes na watchlist.")
+      }
+      if (errorMessage.includes('Nao existe filmes em comum na watchlist.')) {
+        reject("Nao existe filmes em comum na watchlist.")
+      }
+    });
+
     pythonProcess.on('close', (code) => {
       if (code === 0) {
         resolve(scriptOutput);

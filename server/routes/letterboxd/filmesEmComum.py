@@ -1,33 +1,47 @@
 
 import sys
 
+class CustomPythonError(Exception):
+  pass
+
+class EmptyFilmesEmComumError(Exception):
+  pass
+
 #
 # PROGRAMA QUE MSOTRA A INTERSECAO DA WATCHILIST DE USUARIOS NO LETTERBOXD
 #
 
 def get_watchlist_together3(filmes, usuarios, todo_mundo):
+  
+  try:
+    filmes_repetidos = []
 
-  filmes_repetidos = []
+    for filme in filmes:
+      numero_filme = filmes.count(filme)
+      if todo_mundo:
+        if numero_filme == len(usuarios):
+          filmes_repetidos.append(filme)
+      else:
+        if numero_filme > 1:
+          filmes_repetidos.append(filme)
 
-  for filme in filmes:
-    numero_filme = filmes.count(filme)
-    if todo_mundo:
-      if numero_filme == len(usuarios):
-        filmes_repetidos.append(filme)
-    else:
-      if numero_filme > 1:
-        filmes_repetidos.append(filme)
+    filmes_comum = []
 
-  filmes_comum = []
+    for filme in filmes_repetidos:
+      if filme in filmes_comum:
+        pass
+      else:
+        filmes_comum.append(filme)
+    
+    if len(filmes_comum) == 0:
+      raise EmptyFilmesEmComumError("Nao existe filmes em comum na watchlist.")
 
-  for filme in filmes_repetidos:
-    if filme in filmes_comum:
-      pass
-    else:
-      filmes_comum.append(filme)
-
-  print(filmes_comum)
-  print(len(filmes_comum)*5)
+    print(filmes_comum)
+    print(len(filmes_comum)*5)
+  except EmptyFilmesEmComumError:
+    raise ("Nao existe filmes em comum na watchlist.")
+  except Exception:
+    raise CustomPythonError("Error")
 
 def main():
 
