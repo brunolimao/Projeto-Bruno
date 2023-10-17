@@ -8,13 +8,13 @@ import {Link} from "react-router-dom";
 function NavbarHome (){
 
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar className='navbarHome'>
       <Container>
         <Navbar.Brand><Link to="/" className='link'>Home</Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/letterboxd/watchlist" className='link'>Watchlist</Link>
+            <Link to="/letterboxd/getWatchlist" className='link'>Watchlist</Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

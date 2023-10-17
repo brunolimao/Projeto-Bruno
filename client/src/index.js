@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import Home from './pages/Home';
 import ResultWatchlist from './letterboxd/pages/resultWatchlist';
-import Watchlist from './letterboxd/pages/watchlist';
+import GetWatchlist from './letterboxd/pages/getWatchlist';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,7 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/letterboxd/resultwatchlist" element={<ResultWatchlist />}/>
-        <Route path="/letterboxd/watchlist" element={<Watchlist />}/>
+        <Route path="/letterboxd/getWatchlist" element={<GetWatchlist />}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

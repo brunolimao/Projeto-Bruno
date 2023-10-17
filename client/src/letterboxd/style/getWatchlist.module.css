@@ -1,0 +1,25 @@
+.watchlist{
+  background-color: #1F262C !important;
+}
+
+.loader {
+  border: 16px solid #1F262C; /* Light grey */
+  border-top: 16px solid #00E054; /* green */
+  border-left: 16px solid #FF8000; /* orange */
+  border-right: 16px solid #40BCF4; /* blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.text-color-white{
+  color:white
+}
